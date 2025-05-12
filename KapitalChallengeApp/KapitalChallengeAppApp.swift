@@ -8,13 +8,27 @@
 import SwiftUI
 
 @main
-struct KapitalChallengeAppApp: App {
+struct YuGiOhApp: App {
     let persistenceController = PersistenceController.shared
-
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            let context = persistenceController.container.viewContext
+            let localDataSource = CardLocalDataSource(context: context)
+            let viewModel = CardsViewModel(localDataSource: localDataSource)
+            
+            TabView {
+                CardsListView(viewModel: viewModel)
+                    .tabItem {
+                        Label("Cards", systemImage: "rectangle.stack")
+                    }
+                
+                FavoritesView(viewModel: viewModel)
+                    .tabItem {
+                        Label("Favourites", systemImage: "star.fill")
+                    }
+            }
+            .environment(\.managedObjectContext, context)
         }
     }
 }

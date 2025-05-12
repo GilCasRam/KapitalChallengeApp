@@ -1,3 +1,12 @@
+//
+//  FavoriteCardRowView.swift
+//  KapitalChallengeApp
+//
+//  Created by Gil Alfredo Casimiro Ramírez on 10/05/25.
+//
+
+import SwiftUI
+
 struct FavoriteCardRowView: View {
     let card: YuGiOhCard
     var onDelete: () -> Void
@@ -9,7 +18,7 @@ struct FavoriteCardRowView: View {
             
             VStack(alignment: .leading) {
                 Text(card.name)
-                    .font(.headline)
+                    .font(.custom("Papyrus", size: 15))
                 Text(card.type)
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -25,6 +34,7 @@ struct FavoriteCardRowView: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(.vertical, 4)
+        .padding()
+        .background(Color.red.opacity(0.1))
     }
 }

@@ -1,9 +1,16 @@
+//
+//  CardDetailView.swift
+//  KapitalChallengeApp
+//
+//  Created by Gil Alfredo Casimiro Ramírez on 10/05/25.
+//
+
 import SwiftUI
 
 struct CardDetailView: View {
     let card: YuGiOhCard
     let isFavorite: Bool
-    let toggleFavorite: () -> Void
+    let toggleFavorite: () -> Bool
     
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -11,44 +18,28 @@ struct CardDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                if let data = card.imageData, let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 300)
-                        .cornerRadius(12)
-                } else {
-                    AsyncImage(url: URL(string: card.imageUrl)) { image in
-                        image.resizable()
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .scaledToFit()
-                    .frame(height: 300)
-                    .cornerRadius(12)
-                }
-
+                CachedAsyncImage(url: URL(string: card.imageUrl))
                 Text(card.name)
-                    .font(.largeTitle)
+                    .font(.custom("Papyrus", size: 25))
+                    .foregroundColor(.black)
                     .bold()
-                    .multilineTextAlignment(.center)
+                    .multilineTextAlignment(.leading)
 
                 Text(card.type)
                     .font(.subheadline)
                     .foregroundColor(.gray)
+                    .multilineTextAlignment(.leading)
 
-                if let desc = card.desc {
-                    Text(desc)
-                        .font(.body)
+                    Text(card.desc)
+                        .font(.custom("Georgia", size: 20))
                         .padding()
-                }
 
                 Button(action: {
                     let wasAdded = toggleFavorite()
-                    alertMessage = wasAdded ? "⭐️ Se agregó a favoritos" : "⚠️ Ya está en favoritos"
+                    alertMessage = wasAdded ? "⭐️ Added to favourites" : "⚠️ Already in favourites"
                     showAlert = true
                 }) {
-                    Label("Agregar a favoritos", systemImage: "star")
+                    Label("Add to favourites", systemImage: "star")
                         .padding()
                         .background(Color.blue.opacity(0.1))
                         .cornerRadius(8)
@@ -56,8 +47,20 @@ struct CardDetailView: View {
             }
             .padding()
         }
-        .navigationTitle("Detalles")
+        .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.95, green: 0.85, blue: 0.6),
+                    Color(red: 0.8, green: 0.65, blue: 0.3),
+                    Color(red: 1.0, green: 0.9, blue: 0.7)        
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+        )
         .alert(alertMessage, isPresented: $showAlert) {
             Button("OK", role: .cancel) {}
         }
