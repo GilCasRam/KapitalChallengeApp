@@ -42,6 +42,7 @@ final class CardsViewModel: ObservableObject {
         self.apiService = apiService
         self.localDataSource = localDataSource
     }
+    
     /// Computed property to return search card and filter
     var filteredCards: [YuGiOhCard] {
         let unique = Dictionary(grouping: cards, by: \.id).compactMap { $0.value.first }
@@ -53,7 +54,7 @@ final class CardsViewModel: ObservableObject {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         }
-    
+    }
     
     /// Computed property to return currently favorite cards, depending on online/offline mode
     var favoriteCards: [YuGiOhCard] {
