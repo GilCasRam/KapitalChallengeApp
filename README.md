@@ -81,8 +81,8 @@ The `YuGiOhAPIService` is unit tested using `XCTest` with a mock URL protocol:
 
 ## Screenshots
 
-| Home View             | Detail View            | Favorites View         | Offline Mode            |
-|-----------------------|------------------------|-------------------------|--------------------------|
+| Splash View           | Home View              | Favorites View          | Details view             | Offline Mode             |
+|-----------------------|------------------------|-------------------------|--------------------------|--------------------------|
 | ![Splash](screenshots/SplashScreen.png) | ![Home](screenshots/HomeView.png) | ![Favorites](screenshots/FavouritesView.png) | ![Details](screenshots/DetailView.png) | ![Offline](screenshots/Offline.png)
 
 > Place your actual screenshots in a `screenshots/` folder inside the root of the project and update the paths if needed.
